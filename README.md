@@ -1,0 +1,1 @@
+# googleads_konami_autobidder
