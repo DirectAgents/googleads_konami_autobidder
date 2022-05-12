@@ -1,13 +1,21 @@
+import os
 import urllib
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
-from utils.config import get_database_config
 
 
-database_config = get_database_config()
+def get_database_config() -> dict:
+    config = {'DRIVER': 'SQL Server',
+              'SERVER': 'daazure1.database.windows.net',
+              'PORT': '1433',
+              'DATABASE': 'DA_Data',
+              'UID': os.environ['DATABASE_UID'],
+              'PWD': os.environ['DATABASE_PWD']}
+    return config
 
 
 def build_database_url_encoded() -> str:
+    database_config = get_database_config()
     return urllib.parse.quote_plus(
         f"DRIVER={{{database_config['DRIVER']}}};"
         f"SERVER={database_config['SERVER']},{database_config['PORT']};"

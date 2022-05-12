@@ -1,70 +1,60 @@
-from typing import Tuple
-
 import numpy as np
 import pandas as pd
+from typing import Tuple
 from google.protobuf.json_format import MessageToDict
-from google.ads.googleads.client import GoogleAdsClient
-from utils.config import get_inputs_config, get_google_ads_credentials_file_path
+from utils.build_gads_client import get_google_ads_client
 
 
-config = get_inputs_config()
+def build_report_query(campaign_id: str, report_type: str,
+                       start_date: str, end_date: str, adgroup_names: Tuple[str] = None) -> str:
+    # TODAY PERFORMANCE
+    today_performance_query = f"""
+        SELECT
+            campaign.id,
+            campaign.name,
+            metrics.impressions,
+            metrics.clicks,
+            metrics.cost_micros,
+            metrics.all_conversions,
+            metrics.all_conversions_value,
+            metrics.all_conversions_from_interactions_rate,
+            metrics.cost_per_all_conversions,
+            metrics.search_impression_share,
+            segments.hour,
+            segments.date
+        FROM campaign
+        WHERE campaign.id = {campaign_id}
+        AND segments.date BETWEEN "{start_date}" AND "{end_date}"
+        
+    """
 
-customer_id = str(config['CUSTOMER_ID'])
-campaign_id = str(config['CAMPAIGN_ID'])
-
-credentials_yaml_path = get_google_ads_credentials_file_path()
-gads_client = GoogleAdsClient.load_from_storage(path=credentials_yaml_path, version="v10")
-gads_service = gads_client.get_service("GoogleAdsService")
-
-# TODAY PERFORMANCE
-TODAY_PERFORMANCE_QUERY = f"""
-    SELECT
-        campaign.id,
-        campaign.name,
-        metrics.impressions,
-        metrics.clicks,
-        metrics.cost_micros,
-        metrics.all_conversions,
-        metrics.all_conversions_value,
-        metrics.all_conversions_from_interactions_rate,
-        metrics.cost_per_all_conversions,
-        metrics.search_impression_share,
-        segments.hour,
-        segments.date
-    FROM campaign
-    WHERE campaign.id = {campaign_id}
-"""
-
-# ADGROUP_PERFORMANCE_QUERY
-ADGROUP_PERFORMANCE_QUERY = f"""
-    SELECT
-        ad_group.name,
-        campaign.id,
-        campaign.name,
-        metrics.impressions,
-        metrics.clicks,
-        metrics.cost_micros,
-        metrics.all_conversions,
-        metrics.all_conversions_value,
-        metrics.all_conversions_from_interactions_rate,
-        metrics.cost_per_all_conversions,
-        metrics.search_impression_share,
-        segments.hour,
-        segments.date
-    FROM ad_group
-    WHERE campaign.id = {campaign_id}
-"""
-
-
-def build_report_query(report_type: str, start_date: str, end_date: str, adgroup_names: Tuple[str] = None) -> str:
-    report_query = TODAY_PERFORMANCE_QUERY if report_type == 'TODAY_PERFORMANCE_REPORT' else ADGROUP_PERFORMANCE_QUERY
+    # ADGROUP_PERFORMANCE_QUERY
+    adgroup_performance_query = f"""
+        SELECT
+            ad_group.name,
+            campaign.id,
+            campaign.name,
+            metrics.impressions,
+            metrics.clicks,
+            metrics.cost_micros,
+            metrics.all_conversions,
+            metrics.all_conversions_value,
+            metrics.all_conversions_from_interactions_rate,
+            metrics.cost_per_all_conversions,
+            metrics.search_impression_share,
+            segments.hour,
+            segments.date
+        FROM ad_group
+        WHERE campaign.id = {campaign_id}
+        AND segments.date BETWEEN "{start_date}" AND "{end_date}"
+        
+    """
+    report_query = today_performance_query if report_type == 'TODAY_PERFORMANCE_REPORT' else adgroup_performance_query
     if adgroup_names:
         if len(adgroup_names) == 1:
             report_query += f" AND ad_group.name = '{adgroup_names[0]}'"
         else:
             report_query += f" AND ad_group.name IN {adgroup_names}"
-
-    report_query += f" AND segments.date BETWEEN '{start_date}' AND '{end_date}'"
     return report_query
 
 
@@ -145,8 +135,12 @@ def clean_dataframe(dataframe: pd.DataFrame):
     return df_today
 
 
-def get_gads_report(report_type: str, start_date, end_date, adgroup_names=None) -> pd.DataFrame:
-    report_query = build_report_query(report_type, start_date, end_date, adgroup_names)
+def get_gads_report(customer_id: str, campaign_id: str, report_type: str,
+                    start_date, end_date, adgroup_names=None) -> pd.DataFrame:
+
+    gads_client = get_google_ads_client()
+    gads_service = gads_client.get_service("GoogleAdsService")
+    report_query = build_report_query(campaign_id, report_type, start_date, end_date, adgroup_names)
     response = gads_service.search(customer_id=customer_id, query=report_query)
     response_to_dict = MessageToDict(response)
     response_to_dataframe = pd.json_normalize(response_to_dict, record_path=['results'])

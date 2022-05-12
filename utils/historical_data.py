@@ -1,15 +1,9 @@
 import pytz
 import pandas as pd
 from datetime import timedelta, datetime
-from utils.config import get_inputs_config
-from utils.date_formatters import num_day_ago, week_map
 from utils.db import get_database_engine
+from utils.date_formatters import num_day_ago, week_map
 
-
-inputs_config = get_inputs_config()
-LOOKBACK_TABLE_NAME = inputs_config['LOOKBACK_TABLE_NAME']
-NUMBER_OF_CAMPAIGNS = inputs_config['NUMBER_OF_CAMPAIGNS']
-CAMPAIGN_ID = str(inputs_config['CAMPAIGN_ID'])
 
 # Setting Timezone
 tz = pytz.timezone("US/Pacific")
@@ -71,9 +65,10 @@ def get_day_map(dataframe: pd.DataFrame) -> dict:
     return day_map
 
 
-def get_historical_data(start_date: str, end_date: str) -> (pd.DataFrame, dict):
+def get_historical_data(lookback_table_name: str, campaign_id: str,
+                        start_date: str, end_date: str) -> (pd.DataFrame, dict):
     historical_data_query = f"""
-        SELECT * FROM {LOOKBACK_TABLE_NAME} WHERE [Campaign ID] = '{CAMPAIGN_ID}'
+        SELECT * FROM {lookback_table_name} WHERE [Campaign ID] = '{campaign_id}'
     """
 
     database_engine = get_database_engine()
@@ -133,3 +128,7 @@ def get_historical_data(start_date: str, end_date: str) -> (pd.DataFrame, dict):
 
     df_hour_gb.pivot(index='hour_of_day', columns='day_of_week', values='distStd')
     return df_hour_gb, day_map
+
+
+def get_lh_bid():
+    return 1
