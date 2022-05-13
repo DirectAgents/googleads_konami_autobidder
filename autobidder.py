@@ -9,7 +9,7 @@ from utils.historical_data import weight_map, get_historical_data, get_old_lh_bi
 from utils.calculate_bid import calculate_new_bid, calculate_new_mbid
 
 
-def autobidder(**kwargs):
+def autobidder(save_output_on_db=True, change_bid_on_google_ads=True, **kwargs):
     customer_id = kwargs.get('customer_id')
     campaign_id = kwargs.get('campaign_id')
     start_date = kwargs.get('start_date')
@@ -145,11 +145,12 @@ def autobidder(**kwargs):
     print(max_bid_value)
     print(min_bid_value)
 
-    bid_change_executor = GoogleAdsBidChangeExecutor(customer_id=customer_id, campaign_id=campaign_id)
-    bid_change_executor.execute(bid_strategy=bid_strategy,
-                                parameter=parameter,
-                                max_bid_value=max_bid_value,
-                                min_bid_value=min_bid_value)
+    if change_bid_on_google_ads:
+        bid_change_executor = GoogleAdsBidChangeExecutor(customer_id=customer_id, campaign_id=campaign_id)
+        bid_change_executor.execute(bid_strategy=bid_strategy,
+                                    parameter=parameter,
+                                    max_bid_value=max_bid_value,
+                                    min_bid_value=min_bid_value)
 
     campaign_id = str(adgroup_performance_df.iloc[0]['campaign_id'])
 
@@ -170,22 +171,6 @@ def autobidder(**kwargs):
     print(tmp_dict)
 
     output_df = pd.DataFrame([tmp_dict])
-    return output_df
-
-
-if __name__ == '__main__':
-    # used to find the date 77 days ago and once you run it manually change 77 to 7 and have it scheduled to run
-    # every morning once
-    st_date = num_day_ago2(datetime.today().date(), 7)
-
-    # st_date = '2022-04-22'
-
-    # used to find the date same time last week
-    ed_date = num_day_ago2(datetime.today().date(), 0)
-
-    data = autobidder(st_date, ed_date)
-
-    db_engine = get_database_engine()
-
-    output_table_name = ''
-    data.to_sql(output_table_name, con=db_engine, if_exists='append', chunksize=1000)
+    if save_output_on_db:
+        db_engine = get_database_engine()
+        output_df.to_sql(kwargs.get('output_table_name'), con=db_engine, if_exists='append', chunksize=1000)

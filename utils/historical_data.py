@@ -136,18 +136,11 @@ def get_old_lh_bid(old_output_table_name: str, campaign_id: str):
         query = f"""
                    SELECT * FROM {old_output_table_name} WHERE [Campaign] = '{campaign_id}'
                """
+        lh_bid_dataframe = pd.read_sql(query, con=get_database_engine())
+        lh_bid = lh_bid_dataframe.sort_values(['Day', 'Hour'], ascending=False).reset_index().loc[0, 'New Max Bid']
     except Exception as ex:
         print(ex)
         lh_bid = None
-    else:
-        lh_bid = pd.read_sql(query, con=get_database_engine())
-        try:
-            lh_bid = lh_bid.sort_values(['Day', 'Hour'], ascending=False).reset_index().loc[0, 'New Bid']
-        except:
-            try:
-                lh_bid = lh_bid.sort_values(['Day', 'Hour'], ascending=False).reset_index().loc[0, 'max_bid']
-            except:
-                lh_bid = None
 
     if lh_bid is None:
         lh_bid = 0

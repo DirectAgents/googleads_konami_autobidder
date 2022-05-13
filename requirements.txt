@@ -1,0 +1,34 @@
+cachetools==5.0.0
+certifi==2021.10.8
+charset-normalizer==2.0.12
+google-ads==16.0.0
+google-api-core==2.7.3
+google-api-python-client @ file:///C:/Users/leonardo%20black/AppData/Local/pypoetry/Cache/artifacts/d9/ba/09/740257202292118f8cbe3afec135e63abc0a84e643c2d18cfadbc0a8bf/google_api_python_client-2.47.0-py2.py3-none-any.whl
+google-auth==2.6.6
+google-auth-httplib2 @ file:///C:/Users/leonardo%20black/AppData/Local/pypoetry/Cache/artifacts/70/3f/00/c3a592b76a96e03c8f202a29fd88cefbbd27e13975b0e5266bf7dcd469/google_auth_httplib2-0.1.0-py2.py3-none-any.whl
+google-auth-oauthlib==0.5.1
+googleapis-common-protos==1.56.0
+greenlet @ file:///C:/Users/leonardo%20black/AppData/Local/pypoetry/Cache/artifacts/21/2b/de/5e8cae8d0f75577a4fd83b1babace5d9a74bc0edd3866447acbc630e3f/greenlet-1.1.2-cp310-cp310-win_amd64.whl
+grpcio==1.46.0
+grpcio-status==1.46.0
+httplib2 @ file:///C:/Users/leonardo%20black/AppData/Local/pypoetry/Cache/artifacts/6d/fa/29/3ac62fb971f849ceabf2f0e838c2a518debee9f5dbfa1617b8bde2707b/httplib2-0.20.4-py3-none-any.whl
+idna==3.3
+numpy @ file:///C:/Users/leonardo%20black/AppData/Local/pypoetry/Cache/artifacts/b6/de/d5/6f9af60a9bf0c0d9ef14c72440debae6529b6a006ad3e325ac94749795/numpy-1.22.3-cp310-cp310-win_amd64.whl
+oauthlib==3.2.0
+pandas @ file:///C:/Users/leonardo%20black/AppData/Local/pypoetry/Cache/artifacts/e2/20/f2/d5a675fd28603b996f5d511d8be24feddea8a99c6ce366a3114404f463/pandas-1.4.2-cp310-cp310-win_amd64.whl
+proto-plus==1.19.6
+protobuf==3.20.0
+pyasn1==0.4.8
+pyasn1-modules==0.2.8
+pyodbc @ file:///C:/Users/leonardo%20black/AppData/Local/pypoetry/Cache/artifacts/dc/2d/24/6fc2c63d600fad2689f1a4cc73809107e99239f99cf064a5f4dc7c639d/pyodbc-4.0.32-cp310-cp310-win_amd64.whl
+pyparsing @ file:///C:/Users/leonardo%20black/AppData/Local/pypoetry/Cache/artifacts/21/a6/3b/55ae9f701123d450744bdc09d9625793fa2ab7fb17bd557ec799ef097d/pyparsing-3.0.8-py3-none-any.whl
+python-dateutil @ file:///C:/Users/leonardo%20black/AppData/Local/pypoetry/Cache/artifacts/39/9b/3b/576da7c854551d780528d75132c98882925e44de0aecf8a31a4bea379c/python_dateutil-2.8.2-py2.py3-none-any.whl
+pytz @ file:///C:/Users/leonardo%20black/AppData/Local/pypoetry/Cache/artifacts/76/c4/54/e82c514018d400ab72bc3cc53469bd3b519f30e674c7d905fd7c872314/pytz-2022.1-py2.py3-none-any.whl
+PyYAML==5.4.1
+requests==2.27.1
+requests-oauthlib==1.3.1
+rsa==4.8
+six @ file:///C:/Users/leonardo%20black/AppData/Local/pypoetry/Cache/artifacts/89/b2/f8/fd92b6d5daa0f8889429b2fc67ec21eedc5cae5d531ee2853828ced6c7/six-1.16.0-py2.py3-none-any.whl
+SQLAlchemy @ file:///C:/Users/leonardo%20black/AppData/Local/pypoetry/Cache/artifacts/85/7a/15/c6d04bc53f73ea40cbc90b964e2106fa1e02dc056731790cd3e7796aa4/SQLAlchemy-1.4.36-cp310-cp310-win_amd64.whl
+uritemplate @ file:///C:/Users/leonardo%20black/AppData/Local/pypoetry/Cache/artifacts/2a/d6/11/cd290afd2d0cea58f6e23668fa9814ba18c6fa968dfbd7d280a2f76dc6/uritemplate-4.1.1-py2.py3-none-any.whl
+urllib3==1.26.9
