@@ -1,0 +1,29 @@
+Account,Customer Id,Campaign,Campaign Id,Input Table,Output Table,Number of Campaigns,Bid Strategy,Parameter,Mod Percent Max,Mod Percent Min,Max Bid Max,Max Bid Min,Min Bid Max,Min Bid Min,Status
+CW,9916111035,da-non_brand-generic-search-exact,10023327963,,,1,,,,,,,,,paused
+Omaze,7167910385,DA - Premier - NB - Exact,9343961429,omaze_konami_7_day_lookback,,1,,,,,,,,,paused
+M&D,1063518718,DA | Brand | Product | CA,12343713788,,,1,,,,,,,,,paused
+M&D,1063518718,DA | Brand | EpHp| US,9643641297,,,1,,,,,,,,,paused
+Omaze,7167910385,DA - Evergreen - Brand - BMM,1670919582,omaze_konami_7_day_lookback,omaze_konami_hourly_maxCpc_2021104_V2,1,tcpa,both,0,0,1.25,0.50,0.10,0.00,
+Omaze,7167910385,DA - Evergreen - Brand - Credibility,1707907575,omaze_konami_7_day_lookback,omaze_konami_hourly_maxCpc_2021104_V2,1,tcpa,both,0,0,3.00,1.50,0.50,0.00,
+Omaze,7167910385,DA - Evergreen - Brand - Exact,1670205265,omaze_konami_7_day_lookback,omaze_konami_hourly_maxCpc_2021104_V2,1,tcpa,both,0,0,0.20,0.04,0.01,0.00,
+Omaze,7167910385,DA - Evergreen - NB - Generic - BMM,8777757508,omaze_konami_7_day_lookback,omaze_konami_hourly_maxCpc_2021104_V2,1,troas,both,0,0,3.00,1.50,0.25,0.00,
+Omaze,7167910385,DA - Evergreen - NB - Generic - Exact,8777757511,omaze_konami_7_day_lookback,omaze_konami_hourly_maxCpc_2021104_V2,1,troas,both,0,0,5.00,2.00,0.50,0.10,
+Omaze,7167910385,DA - Owned - NB - BMM,9440617340,omaze_konami_7_day_lookback,omaze_konami_hourly_maxCpc_2021104_V2,1,tcpa,both,0,0,3.00,1.50,0.25,0.00,
+Omaze,7167910385,DA - Owned - NB - Exact,9440617334,omaze_konami_7_day_lookback,omaze_konami_hourly_maxCpc_2021104_V2,1,tcpa,both,0,0,5.00,2.00,0.50,0.10,
+Vonage,6725163681,DA | Vonage | Residential | NB,12270603527,vonage_konami_7_day_lookback_20211001,vonage_konami_hourly_maxCpc_20211001,1,tcpa,max,0,0,7.00,2.00,0.00,0.00,
+Wacoal,5552813827,DA - Btemptd - Brand,66782216,wacoal_konami_7_day_lookback_20211027,wacoal_konami_hourly_maxCpc_20211027,1,troas,both,0,0,8.00,4.00,1.50,0.50,
+Wacoal,5552813827,DA - Wacoal - Brand - Products,128146976,wacoal_konami_7_day_lookback_20211027,wacoal_konami_hourly_maxCpc_20211027,1,tcpa,both,0,0,7.00,3.50,1.00,0.25,
+Wacoal,5552813827,DA - Wacoal - Brand - Size,392682896,wacoal_konami_7_day_lookback_20211027,wacoal_konami_hourly_maxCpc_20211027,1,tcpa,both,0,0,10.00,3.00,1.50,0.00,
+Wacoal,5552813827,DA - Wacoal - Brand - SKU - Numbers,630404343,wacoal_konami_7_day_lookback_20211027,wacoal_konami_hourly_maxCpc_20211027,1,tcpa,both,0,0,7.00,3.00,0.75,0.00,
+Belkin,,DA - BwB - Brand TM - EXT (Coco Feb 2020),,,,1,,,,,,,,,paused
+Belkin,,DA - BwB - Brand TM - PHR (Coco Feb 2020),,,,1,,,,,,,,,paused
+Wacoal,5552813827,DA - Wacoal - Non-Brand - DSA,388431296,wacoal_konami_7_day_lookback_20211027,wacoal_konami_hourly_maxCpc_20211027,1,tcpa,both,0,0,6.00,2.00,0.30,0.00,
+Wacoal,5552813827,DA - Wacoal - Non-Brand - Categorical,2075689640,wacoal_konami_7_day_lookback_20211027,wacoal_konami_hourly_maxCpc_20211027,1,troas,both,0,0,6.00,2.00,1.00,0.00,
+Megabus,6006919429,DA | Megabus US | GGL | NB | EXT | Flixbus,2030367119,megabus_konami_7_day_lookback,megabus_konami_hourly_maxCpc_20211103,1,tcpa,both,0,0,1.50,0.50,0.10,0.01,
+Megabus,6006919429,DA | Megabus US | GGL | NB | BMM | Flixbus,2030367791,megabus_konami_7_day_lookback,megabus_konami_hourly_maxCpc_20211103,1,tcpa,max,0,0,1.15,0.50,,,
+Hubble,2159266572,DA - US - Branded - Hubble - EXT,15018313647,hubble_konami_7_day_lookback_20220216,hubble_konami_hourly_maxCpc_20220216,1,tcpa,both,0,0,9.00,4.75,3.50,1.25,
+Hubble,2159266572,DA-UK - Search-Hubble-Contacts-NB-EXT,1046911835,hubble_konami_7_day_lookback_20220216,hubble_konami_hourly_maxCpc_20220216,1,tcpa,both,0,0,15.00,9.00,3.00,0.50,
+Hubble,2159266572,US - Non Brand - Hubble - EXT,15063928270,hubble_konami_7_day_lookback_20220216,hubble_konami_hourly_maxCpc_20220216,1,tcpa,both,0,0,20.00,15.00,5.00,2.00,
+Hubble,2159266572,US - Non Brand - Hubble - PHR,16092373826,hubble_konami_7_day_lookback_20220216,hubble_konami_hourly_maxCpc_20220216,1,tcpa,both,0,0,17.00,10.00,5.00,1.25,
+Hubble,2159266572,DA - CA - Search - Hubble - Contacts - NB - EXT,981195811,hubble_konami_7_day_lookback_20220216,hubble_konami_hourly_maxCpc_20220216,1,tcpa,both,0,0,18.00,8.00,3.00,1.00,
+M&D,1063518718,DA | Brand | Product | US,9647298409,mnd_konami_7_day_lookback_20210628,mnd_konami_hourly_maxCpc_20210706,1,troas,both,0,0,6.00,1.00,0.90,0.40,

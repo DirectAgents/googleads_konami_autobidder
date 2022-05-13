@@ -130,5 +130,26 @@ def get_historical_data(lookback_table_name: str, campaign_id: str,
     return df_hour_gb, day_map
 
 
-def get_lh_bid():
-    return 1
+def get_old_lh_bid(old_output_table_name: str, campaign_id: str):
+
+    try:
+        query = f"""
+                   SELECT * FROM {old_output_table_name} WHERE [Campaign] = '{campaign_id}'
+               """
+    except Exception as ex:
+        print(ex)
+        lh_bid = None
+    else:
+        lh_bid = pd.read_sql(query, con=get_database_engine())
+        try:
+            lh_bid = lh_bid.sort_values(['Day', 'Hour'], ascending=False).reset_index().loc[0, 'New Bid']
+        except:
+            try:
+                lh_bid = lh_bid.sort_values(['Day', 'Hour'], ascending=False).reset_index().loc[0, 'max_bid']
+            except:
+                lh_bid = None
+
+    if lh_bid is None:
+        lh_bid = 0
+
+    return lh_bid
