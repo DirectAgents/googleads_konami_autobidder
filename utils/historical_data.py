@@ -26,21 +26,14 @@ weight_map = {
 }
 
 
-def clean_historical_data(dataframe: pd.DataFrame, start_date=None, end_date=None) -> pd.DataFrame:
-    tz = pytz.timezone("US/Pacific")
-    today = datetime.now(tz)
-
+def clean_historical_data(dataframe: pd.DataFrame) -> pd.DataFrame:
     cleaned_data = dataframe
     cleaned_data.drop_duplicates(['day', 'hour_of_day'], inplace=True)
     cleaned_data['day'] = pd.to_datetime(cleaned_data['day'])
 
-    if not start_date and end_date:
-        # Creating start and end date to filter historical data (Past 8 weeks not including this week)
-        start_date = pd.to_datetime(num_day_ago(today, 1 + today.weekday())) - timedelta(days=1)
-        end_date = pd.to_datetime(num_day_ago(today, today.weekday()))  # - timedelta(days=1)
-    else:
-        start_date = pd.to_datetime(start_date)
-        end_date = pd.to_datetime(end_date)
+    # Creating start and end date to filter historical data (Past 8 weeks not including this week)
+    start_date = pd.to_datetime(num_day_ago(today, 28))
+    end_date = pd.to_datetime(num_day_ago(today, 1))
 
     # Filtering DataFrame
     cleaned_data = cleaned_data[
@@ -65,17 +58,14 @@ def get_day_map(dataframe: pd.DataFrame) -> dict:
     return day_map
 
 
-def get_historical_data(lookback_table_name: str, campaign_id: str,
-                        start_date: str, end_date: str) -> (pd.DataFrame, dict):
+def get_historical_data(lookback_table_name: str, campaign_id: str) -> (pd.DataFrame, dict):
     historical_data_query = f"""
         SELECT * FROM {lookback_table_name} WHERE [Campaign ID] = '{campaign_id}'
     """
 
     database_engine = get_database_engine()
     dataframe = pd.read_sql(historical_data_query, database_engine)
-    # dataframe = pd.read_csv('mocks/lookback_output.csv')
-
-    dataframe = dataframe.rename(columns={
+    dataframe.rename(columns={
         'Campaign': 'campaign',
         'Campaign ID': 'campaign_id',
         'Day': 'day',
@@ -90,12 +80,12 @@ def get_historical_data(lookback_table_name: str, campaign_id: str,
         'ROAS': 'roas',
         'CPC': 'cpc',
         'Budget': 'budget'
-    })
+    }, inplace=True)
 
-    cleaned_data = clean_historical_data(dataframe, start_date, end_date)
+    cleaned_data = clean_historical_data(dataframe)
 
     day_map = get_day_map(cleaned_data)
-
+    return day_map
     # Adding Week nums to dataframe
     cleaned_data['week_num'] = cleaned_data.apply(lambda x: week_map(x['day'], day_map), 1)
 
@@ -128,6 +118,10 @@ def get_historical_data(lookback_table_name: str, campaign_id: str,
 
     df_hour_gb.pivot(index='hour_of_day', columns='day_of_week', values='distStd')
     return df_hour_gb, day_map
+
+
+if __name__ == '__main__':
+    get_historical_data(lookback_table_name='mnd_konami_7_day_lookback_20210628', campaign_id='9647298409')
 
 
 def get_old_lh_bid(old_output_table_name: str, campaign_id: str):

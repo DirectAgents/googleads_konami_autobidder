@@ -32,8 +32,10 @@ def autobidder(save_output_on_db=True, change_bid_on_google_ads=True, **kwargs):
     hour = today.strftime("%H")
     hour = int(hour)
     today = today.date()
-    lw = num_day_ago(today, 0)
+    lw = num_day_ago2(today, 0)
     lasthour = hour - 1
+
+    lh_bid = get_old_lh_bid(old_output_table_name, campaign_id)
 
     today_performance_df = get_gads_report(customer_id, campaign_id,
                                            'TODAY_PERFORMANCE_REPORT', start_date, end_date)
@@ -46,9 +48,11 @@ def autobidder(save_output_on_db=True, change_bid_on_google_ads=True, **kwargs):
 
     # Calculating average hourly impressions for ad group
     adgroup_average_impressions = get_gads_report(customer_id, campaign_id, 'ADGROUP_PERFORMANCE_REPORT',
-                                                  start_date, end_date,  adgroup_names=tuple(current_adgroups))
+                                                  start_date, end_date, adgroup_names=tuple(current_adgroups))
 
-    historical_data, day_map = get_historical_data(lookback_table_name, campaign_id, start_date, end_date)
+    day_map = get_historical_data(lookback_table_name, campaign_id)
+    # historical_data.to_csv('historical_data.csv', sep=',', encoding='utf-8', index=False)
+    historical_data = pd.read_csv('historical_data.csv')
 
     adgroup_average_impressions['day'] = pd.to_datetime(adgroup_average_impressions['day'])
     adgroup_average_impressions = adgroup_average_impressions.groupby(
@@ -78,20 +82,21 @@ def autobidder(save_output_on_db=True, change_bid_on_google_ads=True, **kwargs):
         ].reset_index().loc[0, 'distStd']
 
     if hour == 0:
-        df_lh = today_performance_df[(today_performance_df['hour_of_day'] == '23')]
+        df_lh = today_performance_df.query("hour_of_day == 23")
     else:
-        df_lh = today_performance_df[
-            (today_performance_df['day'] == lw) & (today_performance_df['hour_of_day'] == lasthour)]
+        query = f"day == '{lw}' & hour_of_day == {lasthour}"
+        df_lh = today_performance_df.query(query)
 
     df_lh.reset_index().drop('index', 1)
 
     impressions = df_lh['impressions']
     latest_imp = sum(impressions)
     if latest_imp < avgimp:
-        a = (avgimp - latest_imp) / avgimp
-        print(a)
+        imp_hoh = (avgimp - latest_imp) / avgimp
+        print(imp_hoh)
+    else:
+        imp_hoh = (latest_imp - avgimp) / avgimp
 
-    imp_hoh = (latest_imp - avgimp) / avgimp
 
     lh_bid = get_old_lh_bid(old_output_table_name, campaign_id)
     new_bid = calculate_new_bid(lh_bid_change, imp_hoh, lh_bid)

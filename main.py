@@ -4,7 +4,6 @@ from textwrap import dedent
 from datetime import datetime
 from autobidder import autobidder
 from utils.date_formatters import num_day_ago2
-from utils.db import get_database_engine
 
 
 def main(**kwargs):
@@ -15,9 +14,7 @@ def main(**kwargs):
                 Campaign: {kwargs.get('campaign_name')}/{kwargs.get('campaign_id')}
                 Output Table will be: {kwargs.get('output_table_name')}
             """))
-        data = autobidder(**kwargs)
-        db_engine = get_database_engine()
-        data.to_sql(kwargs.get('output_table_name'), con=db_engine, if_exists='append', chunksize=1000)
+        autobidder(**kwargs)
         print(dedent(f"""
                 Success Running for:
                 Customer: {kwargs.get('customer_name')}/{kwargs.get('customer_id')}
