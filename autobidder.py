@@ -35,7 +35,6 @@ def autobidder(save_output_on_db=True, change_bid_on_google_ads=True, **kwargs):
     lw = num_day_ago2(today, 0)
     lasthour = hour - 1
 
-    lh_bid = get_old_lh_bid(old_output_table_name, campaign_id)
 
     today_performance_df = get_gads_report(customer_id, campaign_id,
                                            'TODAY_PERFORMANCE_REPORT', start_date, end_date)
@@ -50,9 +49,9 @@ def autobidder(save_output_on_db=True, change_bid_on_google_ads=True, **kwargs):
     adgroup_average_impressions = get_gads_report(customer_id, campaign_id, 'ADGROUP_PERFORMANCE_REPORT',
                                                   start_date, end_date, adgroup_names=tuple(current_adgroups))
 
-    day_map = get_historical_data(lookback_table_name, campaign_id)
-    # historical_data.to_csv('historical_data.csv', sep=',', encoding='utf-8', index=False)
-    historical_data = pd.read_csv('historical_data.csv')
+    historical_data, day_map = get_historical_data(lookback_table_name, campaign_id)
+    historical_data.to_csv('historical_data.csv', sep=',', encoding='utf-8', index=False)
+    # historical_data = pd.read_csv('historical_data.csv')
 
     adgroup_average_impressions['day'] = pd.to_datetime(adgroup_average_impressions['day'])
     adgroup_average_impressions = adgroup_average_impressions.groupby(

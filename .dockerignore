@@ -1,0 +1,12 @@
+.coverage
+.env/*
+.git/*
+.idea/*
+.venv/*
+__memoize__/*
+data/*
+htmlcov/*
+logs/*
+notebooks/*
+results/*
+lookback.bat

@@ -5,7 +5,7 @@ from sqlalchemy.engine import Engine
 
 
 def get_database_config() -> dict:
-    config = {'DRIVER': 'SQL Server',
+    config = {'DRIVER': 'ODBC Driver 18 for SQL Server',
               'SERVER': 'daazure1.database.windows.net',
               'PORT': '1433',
               'DATABASE': 'DA_Data',

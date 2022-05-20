@@ -4,6 +4,7 @@ from textwrap import dedent
 from datetime import datetime
 from autobidder import autobidder
 from utils.date_formatters import num_day_ago2
+import sys
 
 
 def main(**kwargs):
@@ -14,7 +15,9 @@ def main(**kwargs):
                 Campaign: {kwargs.get('campaign_name')}/{kwargs.get('campaign_id')}
                 Output Table will be: {kwargs.get('output_table_name')}
             """))
-        autobidder(**kwargs)
+        autobidder(
+            **kwargs
+        )
         print(dedent(f"""
                 Success Running for:
                 Customer: {kwargs.get('customer_name')}/{kwargs.get('customer_id')}
@@ -118,6 +121,10 @@ if __name__ == '__main__':
                 )
          ] for customer_campaign in customers_campaigns
     ]
-
-    for group_of_campaigns in group_of_campaigns_to_run:
-        lookback_thread = AutobidderGroupThread(group_of_campaigns)
+    try:
+        for group_of_campaigns in group_of_campaigns_to_run:
+            lookback_thread = AutobidderGroupThread(group_of_campaigns)
+    except Exception as ex:
+        print(ex)
+    else:
+        sys.exit(0)

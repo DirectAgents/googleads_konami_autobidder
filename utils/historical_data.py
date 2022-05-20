@@ -85,7 +85,7 @@ def get_historical_data(lookback_table_name: str, campaign_id: str) -> (pd.DataF
     cleaned_data = clean_historical_data(dataframe)
 
     day_map = get_day_map(cleaned_data)
-    return day_map
+
     # Adding Week nums to dataframe
     cleaned_data['week_num'] = cleaned_data.apply(lambda x: week_map(x['day'], day_map), 1)
 
