@@ -50,7 +50,7 @@ def autobidder(save_output_on_db=True, change_bid_on_google_ads=True, **kwargs):
                                                   start_date, end_date, adgroup_names=tuple(current_adgroups))
 
     historical_data, day_map = get_historical_data(lookback_table_name, campaign_id)
-    historical_data.to_csv('historical_data.csv', sep=',', encoding='utf-8', index=False)
+    # historical_data.to_csv('historical_data.csv', sep=',', encoding='utf-8', index=False)
     # historical_data = pd.read_csv('historical_data.csv')
 
     adgroup_average_impressions['day'] = pd.to_datetime(adgroup_average_impressions['day'])
