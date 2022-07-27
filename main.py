@@ -5,6 +5,9 @@ from datetime import datetime
 from autobidder import autobidder
 from utils.date_formatters import num_day_ago2
 import sys
+import warnings
+
+warnings.filterwarnings("ignore")
 
 
 def main(**kwargs):
