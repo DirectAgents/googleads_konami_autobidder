@@ -60,7 +60,7 @@ def get_day_map(dataframe: pd.DataFrame) -> dict:
 
 def get_historical_data(lookback_table_name: str, campaign_id: str) -> (pd.DataFrame, dict):
     historical_data_query = f"""
-        SELECT * FROM {lookback_table_name} WHERE [Campaign ID] = '{campaign_id}'
+        SELECT * FROM [{lookback_table_name}] WHERE [Campaign ID] = {campaign_id}
     """
 
     database_engine = get_database_engine()
@@ -128,7 +128,7 @@ def get_old_lh_bid(old_output_table_name: str, campaign_id: str):
 
     try:
         query = f"""
-                   SELECT * FROM {old_output_table_name} WHERE [Campaign] = '{campaign_id}'
+                   SELECT * FROM [{old_output_table_name}] WHERE [Campaign] = '{campaign_id}'
                """
         lh_bid_dataframe = pd.read_sql(query, con=get_database_engine())
         lh_bid = lh_bid_dataframe.sort_values(['Day', 'Hour'], ascending=False).reset_index().loc[0, 'New Max Bid']
